@@ -69,8 +69,16 @@
 		        		</div>
 	        		</div>
 	        	</div>
-
 	        <?php endwhile; ?>
+	        <br>
+			<div class="row">
+				<div class="col-lg-6 text-center">
+					<button class="btn btn-block btn-outline-success" type="button" id="add_more">Add More Items</button>
+				</div>
+				<div class="col-lg-6 text-center">
+					<button class="btn btn-block btn-outline-danger" type="button" id="clear_cart">Clear Cart</button>
+				</div>
+			</div>
         	</div>
         	<div class="col-md-4">
         		<div class="sticky">
@@ -129,6 +137,20 @@
 				 $(this).parent().siblings('input[name="qty"]').val(parseInt(qty) +1);
 		update_qty(parseInt(qty) +1,$(this).attr('data-id'))
 		})
+		$('#add_more').click(function(){
+			location.replace("index.php?#menu")
+		})
+
+		$('#clear_cart').click(function(){
+			$.ajax({
+				url:'admin/ajax.php?action=clear_cart',
+				method:"POST",
+				success:function(resp){
+					location.reload()
+				}
+			})
+		})
+
 		function update_qty(qty,id){
 			start_load()
 			$.ajax({
@@ -136,10 +158,7 @@
 				method:"POST",
 				data:{id:id,qty},
 				success:function(resp){
-					if(resp == 1){
-						load_cart()
-						end_load()
-					}
+					location.reload()
 				}
 			})
 
@@ -151,5 +170,16 @@
 				uni_modal("Checkout","login.php?page=checkout")
 			}
 		})
+		function reload_cart(){
+			$.ajax({
+				url:'admin/ajax.php?action=get_cart_count',
+				method:"POST",
+				success:function(resp){
+					if(resp == 1){
+						location.reload()
+					}
+				}
+			})
+		}
     </script>
 	

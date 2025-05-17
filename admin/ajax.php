@@ -71,6 +71,10 @@ if($action == "delete_cart"){
 	$crud->delete_cart();
 	// No need to capture return value or echo anything
 }
+if($action == "clear_cart"){
+	$crud->clear_cart();
+	// No need to capture return value or echo anything
+}
 if($action == "update_cart_qty"){
 	$save = $crud->update_cart_qty();
 	if($save)

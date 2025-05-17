@@ -239,6 +239,18 @@ Class Action {
 		if($delete)
 			header('location:'.$_SERVER['HTTP_REFERER']);
 	}
+	function clear_cart(){
+		if(isset($_SESSION['login_user_id'])){
+			$delete = $this->db->query("DELETE FROM cart where user_id = ".$_SESSION['login_user_id']);
+			if($delete)
+				header('location:'.$_SERVER['HTTP_REFERER']);
+		}else{
+			$ip = isset($_SERVER['HTTP_CLIENT_IP']) ? $_SERVER['HTTP_CLIENT_IP'] : (isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $_SERVER['REMOTE_ADDR']);
+			$delete = $this->db->query("DELETE FROM cart where client_ip = '$ip'");
+			if($delete)
+				header('location:'.$_SERVER['HTTP_REFERER']);
+		}
+	}
 	function add_to_cart(){
 		extract($_POST);
 		$data = " product_id = $pid ";	
@@ -249,7 +261,6 @@ Class Action {
 		}else{
 			$ip = isset($_SERVER['HTTP_CLIENT_IP']) ? $_SERVER['HTTP_CLIENT_IP'] : (isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $_SERVER['REMOTE_ADDR']);
 			$data .= ", client_ip = '".$ip."' ";	
-
 		}
 		$save = $this->db->query("INSERT INTO cart set ".$data);
 		if($save)

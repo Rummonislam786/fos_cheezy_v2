@@ -10125,7 +10125,37 @@ header.masthead h1 {
     font-size: 3.5rem;
   }
 }
-
+header.masthead2 {
+  padding-top: 1em;
+  padding-bottom: 1em;
+  background: linear-gradient(to bottom, rgb(0 0 0 / 40%) 0%, rgb(245 242 240 / 45%) 100%), url(../assets/img/theater-bg.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-size: cover;
+}
+header.masthead2 h1 {
+  font-size: 2.25rem;
+}
+@media (min-width: 992px) {
+  header.masthead2 {
+   height: 60vh;
+    min-height: 60vh;
+    padding-top: 4.5rem;
+    padding-bottom: 0;
+  }
+  header.masthead2 p {
+    font-size: 1.15rem;
+  }
+  header.masthead2 h1 {
+    font-size: 3rem;
+  }
+}
+@media (min-width: 1200px) {
+  header.masthead2 h1 {
+    font-size: 3.5rem;
+  }
+} 
 #portfolio .container-fluid, #portfolio .container-sm, #portfolio .container-md, #portfolio .container-lg, #portfolio .container-xl {
   max-width: 1920px;
 }
@@ -10230,6 +10260,14 @@ nav#mainNav * {
 nav#mainNav.navbar-scrolled *{
   color: #000 !important;
   text-shadow: unset!important;
+}
+
+/* Keep power-off icon white even when scrolled */
+nav#mainNav.navbar-scrolled .fa-power-off {
+  color: #fff !important;
+}
+nav#mainNav.navbar-scrolled .fa-power-off:hover {
+  color: #fff !important;
 }
 nav#mainNav:has(.collapse.show){
   background: #fff;
