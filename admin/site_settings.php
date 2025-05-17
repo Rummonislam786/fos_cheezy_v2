@@ -1,6 +1,15 @@
 <?php
 include 'db_connect.php';
 $qry = $conn1->query("SELECT * from system_settings limit 1");
+if($_SESSION['login_branch'] == 'Dinajpur'){
+	$qry = $conn2->query("SELECT * from system_settings limit 1");
+}
+if($_SESSION['login_branch'] == 'Barisal'){
+	$qry = $conn3->query("SELECT * from system_settings limit 1");
+}
+if($_SESSION['login_branch'] == 'Jessore'){
+	$qry = $conn4->query("SELECT * from system_settings limit 1");
+}
 if($qry->num_rows > 0){
 	foreach($qry->fetch_array() as $k => $val){
 		$meta[$k] = $val;
@@ -8,7 +17,6 @@ if($qry->num_rows > 0){
 }
  ?>
 <div class="container-fluid">
-	
 	<div class="card col-lg-12">
 		<div class="card-body">
 			<form action="" id="manage-settings">

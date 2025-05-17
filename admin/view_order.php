@@ -13,6 +13,17 @@
 			$total = 0;
 			include 'db_connect.php';
 			$qry = $conn1->query("SELECT * FROM order_list o inner join product_list p on o.product_id = p.id  where order_id =".$_GET['id']);
+			if(isset($_SESSION['login_branch'])){
+				if($_SESSION['login_branch'] == 'Dinajpur'){
+					$qry = $conn2->query("SELECT * FROM order_list o inner join product_list p on o.product_id = p.id  where order_id =".$_GET['id']);
+				}
+				if($_SESSION['login_branch'] == 'Barisal'){
+					$qry = $conn3->query("SELECT * FROM order_list o inner join product_list p on o.product_id = p.id  where order_id =".$_GET['id']);
+				}
+				if($_SESSION['login_branch'] == 'Jessore'){
+					$qry = $conn4->query("SELECT * FROM order_list o inner join product_list p on o.product_id = p.id  where order_id =".$_GET['id']);
+				}
+			}
 			while($row=$qry->fetch_assoc()):
 				$total += $row['qty'] * $row['price'];
 			?>

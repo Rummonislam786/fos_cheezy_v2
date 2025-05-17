@@ -32,6 +32,15 @@
 								<select name="category_id" id="" class="custom-select browser-default">
 									<?php
 									$cat = $conn1->query("SELECT * FROM category_list order by name asc ");
+									if($_SESSION['login_branch'] == 'Dinajpur'){
+										$cat = $conn2->query("SELECT * FROM category_list order by name asc ");
+									}
+									if($_SESSION['login_branch'] == 'Barisal'){
+										$cat = $conn3->query("SELECT * FROM category_list order by name asc ");
+									}
+									if($_SESSION['login_branch'] == 'Jessore'){
+										$cat = $conn4->query("SELECT * FROM category_list order by name asc ");
+									}
 									while($row=$cat->fetch_assoc()):
 									?>
 									<option value="<?php echo $row['id'] ?>"><?php echo $row['name'] ?></option>
@@ -82,6 +91,15 @@
 								<?php 
 								$i = 1;
 								$cats = $conn1->query("SELECT p.*, c.name as cat FROM product_list p inner join category_list c on c.id = p.category_id order by p.id asc");
+								if($_SESSION['login_branch'] == 'Dinajpur'){
+									$cats = $conn2->query("SELECT p.*, c.name as cat FROM product_list p inner join category_list c on c.id = p.category_id order by p.id asc");
+								}
+								if($_SESSION['login_branch'] == 'Barisal'){
+									$cats = $conn3->query("SELECT p.*, c.name as cat FROM product_list p inner join category_list c on c.id = p.category_id order by p.id asc");
+								}
+								if($_SESSION['login_branch'] == 'Jessore'){
+									$cats = $conn4->query("SELECT p.*, c.name as cat FROM product_list p inner join category_list c on c.id = p.category_id order by p.id asc");
+								}
 								while($row=$cats->fetch_assoc()):
 								?>
 								<tr>

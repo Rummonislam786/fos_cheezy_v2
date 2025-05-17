@@ -26,6 +26,17 @@
 				<?php
  					include 'db_connect.php';
  					$users = $conn1->query("SELECT * FROM users order by name asc");
+					if(isset($_SESSION['login_branch'])){
+						if($_SESSION['login_branch'] == 'Dinajpur'){
+							$users = $conn2->query("SELECT * FROM users order by name asc");
+						}
+						if($_SESSION['login_branch'] == 'Barisal'){
+							$users = $conn3->query("SELECT * FROM users order by name asc");
+						}
+						if($_SESSION['login_branch'] == 'Jessore'){
+							$users = $conn4->query("SELECT * FROM users order by name asc");
+						}
+					}
  					$i = 1;
  					while($row= $users->fetch_assoc()):
 				 ?>

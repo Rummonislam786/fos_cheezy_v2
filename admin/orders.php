@@ -19,6 +19,15 @@
 			$i = 1;
 			include 'db_connect.php';
 			$qry = $conn1->query("SELECT * FROM orders ");
+			if($_SESSION['login_branch'] == 'Dinajpur'){
+				$qry = $conn2->query("SELECT * FROM orders ");
+			}
+			if($_SESSION['login_branch'] == 'Barisal'){
+				$qry = $conn3->query("SELECT * FROM orders ");
+			}
+			if($_SESSION['login_branch'] == 'Jessore'){
+				$qry = $conn4->query("SELECT * FROM orders ");
+			}
 			while($row=$qry->fetch_assoc()):
 			 ?>
 			 <tr>

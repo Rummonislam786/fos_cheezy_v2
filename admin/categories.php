@@ -49,6 +49,15 @@
 								<?php 
 								$i = 1;
 								$cats = $conn1->query("SELECT * FROM category_list order by id asc");
+								if($_SESSION['login_branch'] == 'Dinajpur'){
+									$cats = $conn2->query("SELECT * FROM category_list order by id asc");
+								}
+								if($_SESSION['login_branch'] == 'Barisal'){
+									$cats = $conn3->query("SELECT * FROM category_list order by id asc");
+								}
+								if($_SESSION['login_branch'] == 'Jessore'){
+									$cats = $conn4->query("SELECT * FROM category_list order by id asc");
+								}
 								while($row=$cats->fetch_assoc()):
 								?>
 								<tr>

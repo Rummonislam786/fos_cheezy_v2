@@ -15,14 +15,12 @@ if($action == 'login2'){
 		echo $login;
 }
 if($action == 'logout'){
-	$logout = $crud->logout();
-	if($logout)
-		echo $logout;
+	$crud->logout();
+	// No need to capture return value or echo anything
 }
 if($action == 'logout2'){
-	$logout = $crud->logout2();
-	if($logout)
-		echo $logout;
+	$crud->logout2();
+	// No need to capture return value or echo anything
 }
 if($action == 'save_user'){
 	$save = $crud->save_user();
@@ -70,9 +68,8 @@ if($action == "get_cart_count"){
 		echo $save;
 }
 if($action == "delete_cart"){
-	$delete = $crud->delete_cart();
-	if($delete)
-		echo $delete;
+	$crud->delete_cart();
+	// No need to capture return value or echo anything
 }
 if($action == "update_cart_qty"){
 	$save = $crud->update_cart_qty();

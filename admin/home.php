@@ -106,6 +106,15 @@ a.custom-menu-list span.icon{
 						<h5 class="tex-muted">Total Active Menu</h5>
 						<?php 
 						$menu_a = $conn1->query("SELECT * FROM `product_list` where `status` = 1")->num_rows;
+						if($_SESSION['login_branch'] == 'Dinajpur'){
+							$menu_a = $conn2->query("SELECT * FROM `product_list` where `status` = 1")->num_rows;
+						}
+						if($_SESSION['login_branch'] == 'Barisal'){
+							$menu_a = $conn3->query("SELECT * FROM `product_list` where `status` = 1")->num_rows;
+						}
+						if($_SESSION['login_branch'] == 'Jessore'){
+							$menu_a = $conn4->query("SELECT * FROM `product_list` where `status` = 1")->num_rows;
+						}
 						?>
 						<h2 class="text-right"><b><?= number_format($menu_a) ?></b></h2>
 					</div>
@@ -120,6 +129,15 @@ a.custom-menu-list span.icon{
 						<h5 class="tex-muted">Total Inactive Menu</h5>
 						<?php 
 						$menu_i = $conn1->query("SELECT * FROM `product_list` where `status` = 0")->num_rows;
+						if($_SESSION['login_branch'] == 'Dinajpur'){
+							$menu_i = $conn2->query("SELECT * FROM `product_list` where `status` = 0")->num_rows;
+						}
+						if($_SESSION['login_branch'] == 'Barisal'){
+							$menu_i = $conn3->query("SELECT * FROM `product_list` where `status` = 0")->num_rows;
+						}
+						if($_SESSION['login_branch'] == 'Jessore'){
+							$menu_i = $conn4->query("SELECT * FROM `product_list` where `status` = 0")->num_rows;
+						}
 						?>
 						<h2 class="text-right"><b><?= number_format($menu_i) ?></b></h2>
 					</div>
@@ -134,6 +152,15 @@ a.custom-menu-list span.icon{
 						<h5 class="tex-muted">Orders for Verification</h5>
 						<?php 
 						$o_fv = $conn1->query("SELECT * FROM `orders` where `status` = 0")->num_rows;
+						if($_SESSION['login_branch'] == 'Dinajpur'){
+							$o_fv = $conn2->query("SELECT * FROM `orders` where `status` = 0")->num_rows;
+						}
+						if($_SESSION['login_branch'] == 'Barisal'){
+							$o_fv = $conn3->query("SELECT * FROM `orders` where `status` = 0")->num_rows;
+						}
+						if($_SESSION['login_branch'] == 'Jessore'){
+							$o_fv = $conn4->query("SELECT * FROM `orders` where `status` = 0")->num_rows;
+						}
 						?>
 						<h2 class="text-right"><b><?= number_format($o_fv) ?></b></h2>
 					</div>
@@ -148,6 +175,15 @@ a.custom-menu-list span.icon{
 						<h5 class="tex-muted">Confirmed Orders</h5>
 						<?php 
 						$o_c = $conn1->query("SELECT * FROM `orders` where `status` = 1")->num_rows;
+						if($_SESSION['login_branch'] == 'Dinajpur'){
+							$o_c = $conn2->query("SELECT * FROM `orders` where `status` = 1")->num_rows;
+						}
+						if($_SESSION['login_branch'] == 'Barisal'){
+							$o_c = $conn3->query("SELECT * FROM `orders` where `status` = 1")->num_rows;
+						}
+						if($_SESSION['login_branch'] == 'Jessore'){
+							$o_c = $conn4->query("SELECT * FROM `orders` where `status` = 1")->num_rows;
+						}
 						?>
 						<h2 class="text-right"><b><?= number_format($o_c) ?></b></h2>
 					</div>

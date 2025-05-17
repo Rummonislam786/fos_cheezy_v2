@@ -2,6 +2,17 @@
 include('db_connect.php');
 if(isset($_GET['id'])){
 $user = $conn1->query("SELECT * FROM users where id =".$_GET['id']);
+if(isset($_SESSION['login_branch'])){
+	if($_SESSION['login_branch'] == 'Dinajpur'){
+		$user = $conn2->query("SELECT * FROM users where id =".$_GET['id']);
+	}
+	if($_SESSION['login_branch'] == 'Barisal'){
+		$user = $conn3->query("SELECT * FROM users where id =".$_GET['id']);
+	}
+	if($_SESSION['login_branch'] == 'Jessore'){
+		$user = $conn4->query("SELECT * FROM users where id =".$_GET['id']);
+	}
+}
 foreach($user->fetch_array() as $k =>$v){
 	$meta[$k] = $v;
 }

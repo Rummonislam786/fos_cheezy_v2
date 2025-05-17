@@ -51,7 +51,7 @@
 			        		<div class="col-md-4">
 			        			<p><b><large><?php echo $row['name'] ?></large></b></p>
 			        			<p class='truncate'> <b><small>Desc :<?php echo $row['description'] ?></small></b></p>
-			        			<p> <b><small>Unit Price :<?php echo number_format($row['price'],2) ?></small></b></p>
+			        			<p> <b><small>Unit Price :<b style="font-weight: 800; font-size:0.9em">৳</b><?php echo number_format($row['price'],2) ?></small></b></p>
 			        			<p><small>QTY :</small></p>
 			        			<div class="input-group mb-3">
 								  <div class="input-group-prepend">
@@ -64,7 +64,7 @@
 								</div>
 			        		</div>
 			        		<div class="col-md-4 text-right">
-			        			<b><large><?php echo number_format($row['qty'] * $row['price'],2) ?></large></b>
+			        			<b><large><b style="font-weight: 800; font-size:0.9em">৳</b><?php echo number_format($row['qty'] * $row['price'],2) ?></large></b>
 			        		</div>
 		        		</div>
 	        		</div>
@@ -78,7 +78,7 @@
         				<div class="card-body">
         					<p><large>Total Amount</large></p>
         					<hr>
-        					<p class="text-right"><b><?php echo number_format($total,2) ?></b></p>
+        					<p class="text-right"><b><b style="font-weight: 800; font-size:0.9em">৳</b><?php echo number_format($total,2) ?></b></p>
         					<hr>
         					<div class="text-center">
         						<button class="btn btn-block btn-outline-dark" type="button" id="checkout">Proceed to Checkout</button>

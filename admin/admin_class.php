@@ -2,12 +2,19 @@
 session_start();
 Class Action {
 	private $db;
+	private $db2;
+	private $db3;
+	private $db4;
+	private $db5;
 
 	public function __construct() {
 		ob_start();
    	include 'db_connect.php';
     
     $this->db = $conn1;
+    $this->db2 = $conn2;
+    $this->db3 = $conn3;
+    $this->db4 = $conn4;
 	}
 	function __destruct() {
 	    $this->db->close();
@@ -73,10 +80,18 @@ Class Action {
 		$data .= ", `branch` = '$branch' ";
 		if(empty($id)){
 			$save = $this->db->query("INSERT INTO users set ".$data);
+			$save2 = $this->db2->query("INSERT INTO users set ".$data);
+			$save3 = $this->db3->query("INSERT INTO users set ".$data);
+			$save4 = $this->db4->query("INSERT INTO users set ".$data);
+			$save5 = $this->db5->query("INSERT INTO users set ".$data);
 		}else{
 			$save = $this->db->query("UPDATE users set ".$data." where id = ".$id);
+			$save2 = $this->db2->query("UPDATE users set ".$data." where id = ".$id);
+			$save3 = $this->db3->query("UPDATE users set ".$data." where id = ".$id);
+			$save4 = $this->db4->query("UPDATE users set ".$data." where id = ".$id);
+			$save5 = $this->db5->query("UPDATE users set ".$data." where id = ".$id);
 		}
-		if($save){
+		if($save && $save2 && $save3 && $save4 && $save5){
 			return 1;
 		}
 	}
@@ -96,7 +111,11 @@ Class Action {
 			exit;
 		}
 			$save = $this->db->query("INSERT INTO user_info set ".$data);
-		if($save){
+			$save2 = $this->db2->query("INSERT INTO user_info set ".$data);
+			$save3 = $this->db3->query("INSERT INTO user_info set ".$data);
+			$save4 = $this->db4->query("INSERT INTO user_info set ".$data);
+			$save5 = $this->db5->query("INSERT INTO user_info set ".$data);
+		if($save && $save2 && $save3 && $save4 && $save5){
 			$login = $this->login2();
 			return 1;
 		}
@@ -112,17 +131,24 @@ Class Action {
 						$fname = strtotime(date('y-m-d H:i')).'_'.$_FILES['img']['name'];
 						$move = move_uploaded_file($_FILES['img']['tmp_name'],'../assets/img/'. $fname);
 					$data .= ", cover_img = '$fname' ";
-
 		}
 		
 		// echo "INSERT INTO system_settings set ".$data;
 		$chk = $this->db->query("SELECT * FROM system_settings");
 		if($chk->num_rows > 0){
 			$save = $this->db->query("UPDATE system_settings set ".$data." where id =".$chk->fetch_array()['id']);
+			$save2 = $this->db2->query("UPDATE system_settings set ".$data." where id =".$chk->fetch_array()['id']);
+			$save3 = $this->db3->query("UPDATE system_settings set ".$data." where id =".$chk->fetch_array()['id']);
+			$save4 = $this->db4->query("UPDATE system_settings set ".$data." where id =".$chk->fetch_array()['id']);
+			$save5 = $this->db5->query("UPDATE system_settings set ".$data." where id =".$chk->fetch_array()['id']);
 		}else{
 			$save = $this->db->query("INSERT INTO system_settings set ".$data);
+			$save2 = $this->db2->query("INSERT INTO system_settings set ".$data);
+			$save3 = $this->db3->query("INSERT INTO system_settings set ".$data);
+			$save4 = $this->db4->query("INSERT INTO system_settings set ".$data);
+			$save5 = $this->db5->query("INSERT INTO system_settings set ".$data);
 		}
-		if($save){
+		if($save && $save2 && $save3 && $save4 && $save5){
 		$query = $this->db->query("SELECT * FROM system_settings limit 1")->fetch_array();
 		foreach ($query as $key => $value) {
 			if(!is_numeric($key))
@@ -139,16 +165,28 @@ Class Action {
 		$data = " name = '$name' ";
 		if(empty($id)){
 			$save = $this->db->query("INSERT INTO category_list set ".$data);
+			$save2 = $this->db2->query("INSERT INTO category_list set ".$data);
+			$save3 = $this->db3->query("INSERT INTO category_list set ".$data);
+			$save4 = $this->db4->query("INSERT INTO category_list set ".$data);
+			$save5 = $this->db5->query("INSERT INTO category_list set ".$data);
 		}else{
 			$save = $this->db->query("UPDATE category_list set ".$data." where id=".$id);
+			$save2 = $this->db2->query("UPDATE category_list set ".$data." where id=".$id);
+			$save3 = $this->db3->query("UPDATE category_list set ".$data." where id=".$id);
+			$save4 = $this->db4->query("UPDATE category_list set ".$data." where id=".$id);
+			$save5 = $this->db5->query("UPDATE category_list set ".$data." where id=".$id);
 		}
-		if($save)
+		if($save && $save2 && $save3 && $save4 && $save5)
 			return 1;
 	}
 	function delete_category(){
 		extract($_POST);
 		$delete = $this->db->query("DELETE FROM category_list where id = ".$id);
-		if($delete)
+		$delete2 = $this->db2->query("DELETE FROM category_list where id = ".$id);
+		$delete3 = $this->db3->query("DELETE FROM category_list where id = ".$id);
+		$delete4 = $this->db4->query("DELETE FROM category_list where id = ".$id);
+		$delete5 = $this->db5->query("DELETE FROM category_list where id = ".$id);
+		if($delete && $delete2 && $delete3 && $delete4 && $delete5)
 			return 1;
 	}
 	function save_menu(){
@@ -170,17 +208,29 @@ Class Action {
 		}
 		if(empty($id)){
 			$save = $this->db->query("INSERT INTO product_list set ".$data);
+			$save2 = $this->db2->query("INSERT INTO product_list set ".$data);
+			$save3 = $this->db3->query("INSERT INTO product_list set ".$data);
+			$save4 = $this->db4->query("INSERT INTO product_list set ".$data);
+			$save5 = $this->db5->query("INSERT INTO product_list set ".$data);
 		}else{
 			$save = $this->db->query("UPDATE product_list set ".$data." where id=".$id);
+			$save2 = $this->db2->query("UPDATE product_list set ".$data." where id=".$id);
+			$save3 = $this->db3->query("UPDATE product_list set ".$data." where id=".$id);
+			$save4 = $this->db4->query("UPDATE product_list set ".$data." where id=".$id);
+			$save5 = $this->db5->query("UPDATE product_list set ".$data." where id=".$id);
 		}
-		if($save)
+		if($save && $save2 && $save3 && $save4 && $save5)
 			return 1;
 	}
 
 	function delete_menu(){
 		extract($_POST);
 		$delete = $this->db->query("DELETE FROM product_list where id = ".$id);
-		if($delete)
+		$delete2 = $this->db2->query("DELETE FROM product_list where id = ".$id);
+		$delete3 = $this->db3->query("DELETE FROM product_list where id = ".$id);
+		$delete4 = $this->db4->query("DELETE FROM product_list where id = ".$id);
+		$delete5 = $this->db5->query("DELETE FROM product_list where id = ".$id);
+		if($delete && $delete2 && $delete3 && $delete4 && $delete5)
 			return 1;
 	}
 	function delete_cart(){
@@ -237,7 +287,11 @@ Class Action {
 		$data .= ", mobile = '$mobile' ";
 		$data .= ", email = '$email' ";
 		$save = $this->db->query("INSERT INTO orders set ".$data);
-		if($save){
+		$save2 = $this->db2->query("INSERT INTO orders set ".$data);
+		$save3 = $this->db3->query("INSERT INTO orders set ".$data);
+		$save4 = $this->db4->query("INSERT INTO orders set ".$data);
+		$save5 = $this->db5->query("INSERT INTO orders set ".$data);
+		if($save && $save2 && $save3 && $save4 && $save5){
 			$id = $this->db->insert_id;
 			$qry = $this->db->query("SELECT * FROM cart where user_id =".$_SESSION['login_user_id']);
 			while($row= $qry->fetch_assoc()){
@@ -245,8 +299,12 @@ Class Action {
 					$data = " order_id = '$id' ";
 					$data .= ", product_id = '".$row['product_id']."' ";
 					$data .= ", qty = '".$row['qty']."' ";
-					$save2=$this->db->query("INSERT INTO order_list set ".$data);
-					if($save2){
+					$save21=$this->db->query("INSERT INTO order_list set ".$data);
+					$save22=$this->db2->query("INSERT INTO order_list set ".$data);
+					$save23=$this->db3->query("INSERT INTO order_list set ".$data);
+					$save24=$this->db4->query("INSERT INTO order_list set ".$data);
+					$save25=$this->db5->query("INSERT INTO order_list set ".$data);
+					if($save21 && $save22 && $save23 && $save24 && $save25)	{
 						$this->db->query("DELETE FROM cart where id= ".$row['id']);
 					}
 			}
@@ -256,7 +314,11 @@ Class Action {
 function confirm_order(){
 	extract($_POST);
 		$save = $this->db->query("UPDATE orders set status = 1 where id= ".$id);
-		if($save)
+		$save2 = $this->db2->query("UPDATE orders set status = 1 where id= ".$id);
+		$save3 = $this->db3->query("UPDATE orders set status = 1 where id= ".$id);
+		$save4 = $this->db4->query("UPDATE orders set status = 1 where id= ".$id);
+		$save5 = $this->db5->query("UPDATE orders set status = 1 where id= ".$id);
+		if($save && $save2 && $save3 && $save4 && $save5)
 			return 1;
 }
 

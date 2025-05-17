@@ -20,12 +20,34 @@
         <div id="menu-field" class="card-deck mt-2">
                 <?php 
                     include 'admin/db_connect.php';
-                    $limit = 10;
+                    $limit = 8 ;
                     $page = (isset($_GET['_page']) && $_GET['_page'] > 0) ? $_GET['_page'] - 1 : 0 ;
                     $offset = $page > 0 ? $page * $limit : 0;
                     $all_menu =$conn1->query("SELECT id FROM  product_list")->num_rows;
+                    if(isset($_SESSION['login_branch'])){
+                        if($_SESSION['login_branch'] == 'Dinajpur'){
+                            $all_menu =$conn2->query("SELECT id FROM  product_list")->num_rows;
+                        }
+                        if($_SESSION['login_branch'] == 'Barisal'){
+                            $all_menu =$conn3->query("SELECT id FROM  product_list")->num_rows;
+                        }
+                        if($_SESSION['login_branch'] == 'Jessore'){
+                            $all_menu =$conn4->query("SELECT id FROM  product_list")->num_rows;
+                        }
+                    }
                     $page_btn_count = ceil($all_menu / $limit);
                     $qry = $conn1->query("SELECT * FROM  product_list order by `name` asc Limit $limit OFFSET $offset ");
+                    if(isset($_SESSION['login_branch'])){
+                        if($_SESSION['login_branch'] == 'Dinajpur'){
+                            $qry = $conn2->query("SELECT * FROM  product_list order by `name` asc Limit $limit OFFSET $offset ");
+                        }
+                        if($_SESSION['login_branch'] == 'Barisal'){
+                            $qry = $conn3->query("SELECT * FROM  product_list order by `name` asc Limit $limit OFFSET $offset ");
+                        }
+                        if($_SESSION['login_branch'] == 'Jessore'){
+                            $qry = $conn4->query("SELECT * FROM  product_list order by `name` asc Limit $limit OFFSET $offset ");
+                        }
+                    }
                     while($row = $qry->fetch_assoc()):
                     ?>
                     <div class="col-lg-3 mb-3">
@@ -34,7 +56,7 @@
                             <img src="assets/img/<?php echo $row['img_path'] ?>" class="card-img-top" alt="...">
                         </div>
                         <div class="card-body rounded-0">
-                          <h5 class="card-title"><?php echo $row['name'] ?></h5>
+                          <h5 class="card-title"><?php echo $row['name'] ?> <span class="float-right" style="font-size:1.2em"><b style="font-weight: 800; font-size:0.9em">৳</b><?php echo $row['price'] ?></span></h5>
                           <p class="card-text truncate"><?php echo $row['description'] ?></p>
                           <div class="text-center">
                               <button class="btn btn-sm btn-outline-dark view_prod btn-block" data-id=<?php echo $row['id'] ?>><i class="fa fa-eye"></i> View</button>
