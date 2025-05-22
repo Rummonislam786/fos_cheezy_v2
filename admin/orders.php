@@ -36,11 +36,26 @@
 			 		<td><?php echo $row['address'] ?></td>
 			 		<td><?php echo $row['email'] ?></td>
 			 		<td><?php echo $row['mobile'] ?></td>
-			 		<?php if($row['status'] == 1): ?>
-			 			<td class="text-center"><span class="badge badge-success">Confirmed</span></td>
-			 		<?php else: ?>
-			 			<td class="text-center"><span class="badge badge-secondary">For Verification</span></td>
-			 		<?php endif; ?>
+				<?php 
+					
+                switch ($row['status']) {
+                    case '1':
+                        echo '<td class="text-center" data-status="1"><span class="badge badge-success">Preparing...</span></td>';
+                        break;
+					case '2':
+						echo '<td class="text-center" data-status="2"><span class="badge badge-warning">Delivering</span></td>';
+                        break;
+                    case '3':
+                        echo '<td class="text-center" data-status="3"><span class="badge badge-success">Delivered</span></td>';
+                        break;
+                    case '4':
+                        echo '<td class="text-center" data-status="4"><span class="badge badge-danger">Cancelled</span></td>';
+                        break;
+                    default:
+                        echo '<td class="text-center" data-status="0"><span class="badge badge-secondary">For Payment Verification</span></td>';
+                        break;
+                }
+                ?>
 			 		<td>
 			 			<button class="btn btn-sm btn-primary view_order" data-id="<?php echo $row['id'] ?>" >View Order</button>
 			 		</td>
@@ -56,4 +71,5 @@
 	$('.view_order').click(function(){
 		uni_modal('Order','view_order.php?id='+$(this).attr('data-id'))
 	})
+
 </script>

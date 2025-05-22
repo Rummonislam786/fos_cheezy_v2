@@ -12,18 +12,32 @@
 			<?php 
 			$total = 0;
 			include 'db_connect.php';
-			$qry = $conn1->query("SELECT * FROM order_list o inner join product_list p on o.product_id = p.id  where order_id =".$_GET['id']);
+			$qry = $conn1->query("SELECT * FROM orders o inner join order_list ol on o.id = ol.order_id inner join product_list p on ol.product_id = p.id  where o.id =".$_GET['id'] );
 			if(isset($_SESSION['login_branch'])){
 				if($_SESSION['login_branch'] == 'Dinajpur'){
-					$qry = $conn2->query("SELECT * FROM order_list o inner join product_list p on o.product_id = p.id  where order_id =".$_GET['id']);
+					$qry = $conn2->query("SELECT * FROM orders o inner join order_list ol on o.id = ol.order_id inner join product_list p on ol.product_id = p.id  where o.id =".$_GET['id']);
 				}
 				if($_SESSION['login_branch'] == 'Barisal'){
-					$qry = $conn3->query("SELECT * FROM order_list o inner join product_list p on o.product_id = p.id  where order_id =".$_GET['id']);
+					$qry = $conn3->query("SELECT * FROM orders o inner join order_list ol on o.id = ol.order_id inner join product_list p on ol.product_id = p.id  where o.id =".$_GET['id']);
 				}
 				if($_SESSION['login_branch'] == 'Jessore'){
-					$qry = $conn4->query("SELECT * FROM order_list o inner join product_list p on o.product_id = p.id  where order_id =".$_GET['id']);
+					$qry = $conn4->query("SELECT * FROM orders o inner join order_list ol on o.id = ol.order_id inner join product_list p on ol.product_id = p.id  where o.id =".$_GET['id']);
 				}
 			}
+			$qrystatus = $conn1->query("SELECT status FROM orders where id = ".$_GET['id']);
+			if(isset($_SESSION['login_branch'])){
+				if($_SESSION['login_branch'] == 'Dinajpur'){
+					$qrystatus = $conn2->query("SELECT status FROM orders where id = ".$_GET['id']);
+				}
+				if($_SESSION['login_branch'] == 'Barisal'){
+					$qrystatus = $conn3->query("SELECT status FROM orders where id = ".$_GET['id']);
+				}
+				if($_SESSION['login_branch'] == 'Jessore'){
+					$qrystatus = $conn4->query("SELECT status FROM orders where id = ".$_GET['id']);
+				}
+			}
+			$status1 = $qrystatus->fetch_assoc();
+			echo $status1['status'];
 			while($row=$qry->fetch_assoc()):
 				$total += $row['qty'] * $row['price'];
 			?>
@@ -43,9 +57,38 @@
 		</tfoot>
 	</table>
 	<div class="text-center">
-		<button class="btn btn-primary" id="confirm" type="button" onclick="confirm_order()">Confirm</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
+		<?php 
+		if($status1['status'] == 0){
+			?>
+			<button class="btn btn-primary" id="confirm" type="button" onclick="confirm_order('1')">Confirm</button>
+			<button class="btn btn-danger" id="confirm" type="button" onclick="confirm_order('4')">Cancel Order</button>
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			<?php
+		}
+		if($status1['status'] == 1){
+			?>
+			<button class="btn btn-warning" id="confirm" type="button" onclick="confirm_order('2')">Deliver</button>
+			<button class="btn btn-danger" id="confirm" type="button" onclick="confirm_order('4')">Cancel Order</button>
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			<?php
+		}
+		if($status1['status'] == 2){
+			?>
+			<button class="btn btn-success" id="confirm" type="button" onclick="confirm_order('3')">Confirm Delivery</button>
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			<?php
+		}
+		if($status1['status'] == 3){
+			?>
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			<?php
+		}
+		if($status1['status'] == 4){
+			?>
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			<?php
+		}
+		?>
 	</div>
 </div>
 <style>
@@ -54,15 +97,26 @@
 	}
 </style>
 <script>
-	function confirm_order(){
+	function confirm_order(status){
 		start_load()
 		$.ajax({
 			url:'ajax.php?action=confirm_order',
 			method:'POST',
-			data:{id:'<?php echo $_GET['id'] ?>'},
+			data:{id:'<?php echo $_GET['id'] ?>', status:status},
 			success:function(resp){
 				if(resp == 1){
-					alert_toast("Order confirmed.")
+					if(status == 1){
+						alert_toast("Order confirmed.")
+					}
+					if(status == 2){
+						alert_toast("Order is on delivery.")
+					}
+					if(status == 3){
+						alert_toast("Order delivered successfully.")
+					}
+					if(status == 4){
+						alert_toast("Order cancelled.")
+					}
                         setTimeout(function(){
                             location.reload()
                         },1500)

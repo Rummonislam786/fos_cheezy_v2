@@ -149,7 +149,7 @@ a.custom-menu-list span.icon{
 			<div class="card rounded-0 shadow">
 				<div class="card-body">
 					<div class="container-fluid">
-						<h5 class="tex-muted">Orders for Verification</h5>
+						<h5 class="tex-muted">Orders for Payment Verification</h5>
 						<?php 
 						$o_fv = $conn1->query("SELECT * FROM `orders` where `status` = 0")->num_rows;
 						if($_SESSION['login_branch'] == 'Dinajpur'){

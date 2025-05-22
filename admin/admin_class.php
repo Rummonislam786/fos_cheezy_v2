@@ -313,10 +313,10 @@ Class Action {
 	}
 function confirm_order(){
 	extract($_POST);
-		$save = $this->db->query("UPDATE orders set status = 1 where id= ".$id);
-		$save2 = $this->db2->query("UPDATE orders set status = 1 where id= ".$id);
-		$save3 = $this->db3->query("UPDATE orders set status = 1 where id= ".$id);
-		$save4 = $this->db4->query("UPDATE orders set status = 1 where id= ".$id);
+		$save = $this->db->query("UPDATE orders set status = $status where id= $id");
+		$save2 = $this->db2->query("UPDATE orders set status = $status where id= $id");
+		$save3 = $this->db3->query("UPDATE orders set status = $status where id= $id");
+		$save4 = $this->db4->query("UPDATE orders set status = $status where id= $id");
 		if($save && $save2 && $save3 && $save4)
 			return 1;
 }
