@@ -74,6 +74,7 @@
                           </a>
                           <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item text-white" style="color: #fff !important; background-color: #343a40" href="index.php?page=profile">My Profile</a>
+                            <a class="dropdown-item text-white" style="color: #fff !important; background-color: #343a40" href="index.php?page=orders">My Orders</a>
                             <a class="dropdown-item text-white" style="color: #fff !important; background-color: #343a40" href="admin/ajax.php?action=logout2">Logout <i class="fa fa-power-off" style="color: #fff !important;"></i></a>
                           </div>
                         </li>

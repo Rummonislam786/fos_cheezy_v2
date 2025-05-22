@@ -38,7 +38,7 @@ if($chk <= 0){
                         <label for="" class="control-label">Address</label>
                         <textarea cols="30" rows="3" name="address" required="" class="form-control"><?php echo $_SESSION['login_address'] ?></textarea>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" style="display: none;">
                         <label for="" class="control-label">Email</label>
                         <input type="email" name="email" required="" class="form-control" value="<?php echo $_SESSION['login_email'] ?>">
                     </div>  
