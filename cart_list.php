@@ -164,11 +164,50 @@
 
 		}
 		$('#checkout').click(function(){
-			if('<?php echo isset($_SESSION['login_user_id']) ?>' == 1){
-				location.replace("index.php?page=checkout")
-			}else{
-				uni_modal("Checkout","login.php?page=checkout")
-			}
+			// Prevent multiple clicks
+			$(this).attr('disabled', true);
+			
+			// Start loading indicator
+			start_load();
+			
+			// Check if user is logged in
+			var isLoggedIn = <?php echo isset($_SESSION['login_user_id']) ? 'true' : 'false' ?>;
+			
+			// First validate the cart quantity
+			$.ajax({
+				url: 'admin/ajax.php?action=validate_cart_qty',
+				method: 'POST',
+				dataType: 'text',
+				error: function(xhr, status, error) {
+					console.log('Error during validation:', error);
+					alert_toast("An error occurred during validation", "danger");
+					end_load();
+					$('#checkout').attr('disabled', false);
+				},
+				success: function(resp) {
+					// If validation passes
+					if(resp == 1) {
+						// Different flow based on login status
+						if(isLoggedIn) {
+							// Redirect to checkout if logged in
+						location.replace("index.php?page=checkout");
+					} else {
+							// Show login modal if not logged in
+							end_load();
+							$('#checkout').attr('disabled', false);
+							uni_modal("Checkout","login.php?page=checkout");
+						}
+					} else {
+						// If validation fails
+						alert_toast("Some items in your cart exceed available quantity", "danger");
+						setTimeout(function(){
+							location.reload();
+						}, 1500);
+						end_load();
+						$('#checkout').attr('disabled', false);
+					}
+				}
+			});
 		})
 		function reload_cart(){
 			$.ajax({

@@ -1,6 +1,10 @@
 <?php 
   include'admin/db_connect.php';
     $qry = $conn1->query("SELECT * FROM  product_list where id = ".$_GET['id'])->fetch_array();
+	$qty_qry = $conn1->query("SELECT * FROM  product_available_qty where id = ".$_GET['id'])->fetch_array();
+	
+	echo $qty_qry['available_qty'];
+	
 ?>
 <div class="container-fluid">
 
@@ -23,9 +27,17 @@
 			  </div>
 			</div>
           </div>
-          <div class="text-center">
+		  <?php 
+			if($qty_qry['available_qty'] > 0){
+				?>
+				<div class="text-center">
           	<button class="btn btn-outline-dark btn-sm btn-block" id="add_to_cart_modal"><i class="fa fa-cart-plus"></i> Add to Cart</button>
           </div>
+			<?php }else{ ?>
+				<div class="text-center">
+					<button class="btn btn-outline-dark btn-sm btn-block" disabled><i class="fa fa-cart-plus"></i> Out of Stock</button>
+				</div>
+			<?php } ?>
         </div>
         
       </div>
@@ -50,7 +62,28 @@
 			$('input[name="qty"]').val(parseInt(qty) +1);
 	})
 	$('#add_to_cart_modal').click(function(){
+		
 		start_load()
+		if ($('[name="qty"]').val() == 0) {
+			alert_toast("Quantity can't be zero","danger");
+			end_load()
+			return;
+		}
+		if ($('[name="qty"]').val() < 0) {
+			alert_toast("Quantity can't be negative","danger");
+			end_load()
+			return;
+		}
+		if ($('[name="qty"]').val() > 10) {
+			alert_toast("Quantity can't be more than 10","danger");
+			end_load()
+			return;
+		}
+		if( $('[name="qty"]').val() > <?php echo $qty_qry['available_qty'] ?> ){
+			alert_toast("That many quantity is not available","danger");
+			end_load()
+			return;
+		}
 		$.ajax({
 			url:'admin/ajax.php?action=add_to_cart',
 			method:'POST',

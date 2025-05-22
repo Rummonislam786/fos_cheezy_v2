@@ -331,4 +331,85 @@ Class Action {
 		if($save && $save2 && $save3 && $save4)
 			return 1;
 	}
+	function validate_cart_qty(){
+		try {
+			if(isset($_SESSION['login_user_id'])){
+				// For logged in users
+				$user_id = $_SESSION['login_user_id'];
+				$cart_items = $this->db->query("SELECT * FROM cart WHERE user_id = '$user_id'");
+				
+				if(!$cart_items) {
+					// SQL error
+					return 1; // Default to allow checkout if query fails
+				}
+				
+				$response = [];
+				while ($item = $cart_items->fetch_assoc()) {
+					$product_id = $item['product_id'];
+					$qty = $item['qty'];
+
+					$product_query = $this->db->query("SELECT available_qty, name FROM product_available_qty WHERE id = '$product_id'");
+					
+					// Check if product exists
+					if(!$product_query || $product_query->num_rows == 0) {
+						continue; // Skip this product if not found
+					}
+					
+					$product = $product_query->fetch_assoc();
+					
+					if ($qty > $product['available_qty']) {
+						$response[] = [
+							'status' => 'unavailable',
+							'name' => $product['name']
+						];
+					}
+				}
+				
+				if(count($response) > 0){
+					return 0; // Some items exceed available quantity
+				}
+				return 1; // All items are available
+			} else {
+				// For non-logged in users
+				$ip = isset($_SERVER['HTTP_CLIENT_IP']) ? $_SERVER['HTTP_CLIENT_IP'] : (isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $_SERVER['REMOTE_ADDR']);
+				
+				$cart_items = $this->db->query("SELECT * FROM cart WHERE client_ip = '$ip'");
+				
+				if(!$cart_items) {
+					// SQL error
+					return 1; // Default to allow checkout if query fails
+				}
+				
+				$response = [];
+				while ($item = $cart_items->fetch_assoc()) {
+					$product_id = $item['product_id'];
+					$qty = $item['qty'];
+
+					$product_query = $this->db->query("SELECT available_qty, name FROM product_available_qty WHERE id = '$product_id'");
+					
+					// Check if product exists
+					if(!$product_query || $product_query->num_rows == 0) {
+						continue; // Skip this product if not found
+					}
+					
+					$product = $product_query->fetch_assoc();
+					
+					if ($qty > $product['available_qty']) {
+						$response[] = [
+							'status' => 'unavailable',
+							'name' => $product['name']
+						];
+					}
+				}
+				
+				if(count($response) > 0){
+					return 0; // Some items exceed available quantity
+				}
+				return 1; // All items are available
+			}
+		} catch (Exception $e) {
+			// If any error occurs, default to allowing checkout
+			return 1;
+		}
+	}
 }

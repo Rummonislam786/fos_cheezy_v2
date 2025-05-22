@@ -96,5 +96,10 @@ if($action == "update_qty"){
 	if($save)
 		echo $save;
 }
+if($action == "validate_cart_qty"){
+	$save = $crud->validate_cart_qty();
+	echo $save; // Always output the result (0 or 1)
+}
+
 
 

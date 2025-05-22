@@ -174,15 +174,15 @@ a.custom-menu-list span.icon{
 					<div class="container-fluid">
 						<h5 class="tex-muted">Confirmed Orders</h5>
 						<?php 
-						$o_c = $conn1->query("SELECT * FROM `orders` where `status` = 1")->num_rows;
+						$o_c = $conn1->query("SELECT * FROM `orders` where `status` = 3")->num_rows;
 						if($_SESSION['login_branch'] == 'Dinajpur'){
-							$o_c = $conn2->query("SELECT * FROM `orders` where `status` = 1")->num_rows;
+							$o_c = $conn2->query("SELECT * FROM `orders` where `status` = 3")->num_rows;
 						}
 						if($_SESSION['login_branch'] == 'Barisal'){
-							$o_c = $conn3->query("SELECT * FROM `orders` where `status` = 1")->num_rows;
+							$o_c = $conn3->query("SELECT * FROM `orders` where `status` = 3")->num_rows;
 						}
 						if($_SESSION['login_branch'] == 'Jessore'){
-							$o_c = $conn4->query("SELECT * FROM `orders` where `status` = 1")->num_rows;
+							$o_c = $conn4->query("SELECT * FROM `orders` where `status` = 3")->num_rows;
 						}
 						?>
 						<h2 class="text-right"><b><?= number_format($o_c) ?></b></h2>
