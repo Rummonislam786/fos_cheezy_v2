@@ -311,14 +311,24 @@ Class Action {
 			return 1;
 		}
 	}
-function confirm_order(){
-	extract($_POST);
+
+	function confirm_order(){
+		extract($_POST);
 		$save = $this->db->query("UPDATE orders set status = $status where id= $id");
 		$save2 = $this->db2->query("UPDATE orders set status = $status where id= $id");
 		$save3 = $this->db3->query("UPDATE orders set status = $status where id= $id");
 		$save4 = $this->db4->query("UPDATE orders set status = $status where id= $id");
 		if($save && $save2 && $save3 && $save4)
 			return 1;
-}
+	}
 
+	function update_qty(){
+		extract($_POST);
+		$save = $this->db->query("UPDATE product_list set inv_qty = inv_qty + $qty where id= $id");
+		$save2 = $this->db2->query("UPDATE product_list set inv_qty = inv_qty + $qty where id= $id");
+		$save3 = $this->db3->query("UPDATE product_list set inv_qty = inv_qty + $qty where id= $id");
+		$save4 = $this->db4->query("UPDATE product_list set inv_qty = inv_qty + $qty where id= $id");
+		if($save && $save2 && $save3 && $save4)
+			return 1;
+	}
 }
